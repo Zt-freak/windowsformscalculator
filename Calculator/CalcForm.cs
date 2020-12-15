@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Calculator
 {
@@ -24,7 +25,10 @@ namespace Calculator
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            var button = (Button)sender;
+            this.textBox1.Text += button.Text;
+            Debug.WriteLine(button.Text);
+            Debug.WriteLine(this.textBox1.Text);
         }
 
         private void button2_Click(object sender, EventArgs e)
