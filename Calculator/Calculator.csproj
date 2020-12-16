@@ -52,6 +52,18 @@
     <Compile Include="CalcForm.Designer.cs">
       <DependentUpon>CalcForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DigitButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DigitButton.Designer.cs">
+      <DependentUpon>DigitButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OperatorButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OperatorButton.Designer.cs">
+      <DependentUpon>OperatorButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CalcForm.resx">

@@ -13,6 +13,11 @@ namespace Calculator
 {
     public partial class CalcForm : Form
     {
+        public float firstValue = 0;
+        public float secondValue = 0;
+        public System.Collections.ArrayList memory;
+        public string mathOperator = "";
+        public int step = 0;
         public CalcForm()
         {
             InitializeComponent();
@@ -23,37 +28,87 @@ namespace Calculator
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Digit_Click(object sender, EventArgs e)
         {
             var button = (Button)sender;
-            this.textBox1.Text += button.Text;
-            Debug.WriteLine(button.Text);
-            Debug.WriteLine(this.textBox1.Text);
+            switch (this.step)
+            {
+                case 0:
+                    this.display.Text += button.Text;
+                    this.enableOperatorOptions(true);
+                    this.step++;
+                    break;
+                case 2:
+                    this.display.Text += button.Text;
+                    this.enableOperatorOptions(false);
+                    this.step++;
+                    break;
+                case 1:
+                case 3:
+                    this.display.Text += button.Text;
+                    break;
+            }
+            this.checkDigitOptions();
+            //Debug.WriteLine(button.Text);
+            Debug.WriteLine(this.step);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Operator_Click(object sender, EventArgs e)
         {
-
+            var button = (Button)sender;
+            switch (this.step)
+            {
+                case 1:
+                    this.firstValue = float.Parse(this.display.Text);
+                    this.mathOperator = button.Text;
+                    this.display.Text = "";
+                    this.step++;
+                    break;
+                default:
+                    this.mathOperator = button.Text;
+                    break;
+            }
+            Debug.WriteLine(this.step);
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        private void Answer_Click(object sender, EventArgs e)
         {
-
+            var button = (Button)sender;
+            switch (this.step)
+            {
+                case 3:
+                    this.secondValue = float.Parse(this.display.Text);
+                    this.display.Text = "";
+                    // DOTO: Add logic here
+                    this.step = 0;
+                    break;
+            }
+            Debug.WriteLine(this.step);
         }
 
-        private void button11_Click(object sender, EventArgs e)
+        private void enableOperatorOptions (Boolean value)
         {
-
+            this.operatorButtonPlus.Enabled = value;
+            this.operatorButtonMinus.Enabled = value;
+            this.operatorButtonMultiply.Enabled = value;
+            this.operatorButtonDivide.Enabled = value;
         }
 
-        private void button13_Click(object sender, EventArgs e)
+        private void checkDigitOptions()
         {
-
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-
+            int tempDigitButtonIndex = 0;
+            foreach (DigitButton digitButton in this.digitButtons)
+            {
+                if (this.display.TextLength >= 1 && digitButton.Text == "-")
+                {
+                    digitButton.Enabled = false;
+                }
+                if (this.display.Text.Contains('.') && digitButton.Text == ".")
+                {
+                    digitButton.Enabled = false;
+                }
+                tempDigitButtonIndex++;
+            }
         }
     }
 }
